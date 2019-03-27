@@ -79,8 +79,9 @@ try:
        # print ("Distance:",distance,"cm")
         if distance < 30:
             print("Sensorerna har upptäckt ett hinder",distance,"cm bort, kalkylerar annan väg!")
-	    #print("Distance:",distance,"cm")
-            #back_right()
+	    stopit() # Så den inte åker in i vägen när den skickar bilden
+	    #Ta bild
+            #Skicka epost
             r = random.randint(0,11)
             if r > 5:
                 back_right()
