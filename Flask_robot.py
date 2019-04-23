@@ -1,4 +1,4 @@
-
+# Ta bort linjen under denna kommentar och testa igen
 #!/usr/bin/python3
 import RPi.GPIO as GPIO
 import time
