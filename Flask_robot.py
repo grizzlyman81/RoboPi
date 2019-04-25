@@ -76,7 +76,7 @@ def stop():
     GPIO.output(37, False)
    # GPIO.cleanup()
     
-   # return 'true'
+    return 'true'   # <--- Denna var bort kommenterad löste ValueError
 
 if __name__ == "__main__":
 # print "Start"
