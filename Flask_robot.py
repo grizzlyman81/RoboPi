@@ -82,3 +82,4 @@ if __name__ == "__main__":
 # print "Start"
  app.run(host='192.168.0.191',port=5010)
 pi@RoboPi:~/robot $ 
+#<input type="submit" name="submit_button" value="Do Something">
