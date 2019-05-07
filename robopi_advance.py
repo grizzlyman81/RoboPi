@@ -106,26 +106,26 @@ try:
         
             
         if distance < 30:
-            print("Hinder upptäckt",distance,"cm, Tar en bild och epostar den sen väljer annan väg")
+            
             stopit()
             kamera.capture('/home/pi/robot/bilder/'+namn+'.jpeg')
             os.system("/home/pi/robot/send_mail.py")
-	    #print("Distance:",distance,"cm")
-            #back_right()
+	    
+            
             r = random.randint(0,11)
             if r > 5:
-                print("Backar höger")
+                print("Turning right")
                 back_right()
                 time.sleep(0.5)
-               # print("Skickar bild på hindert....")
-               # os.system("/home/pi/robot/send_mail.py")
+               
+               
                 
             else:
-                print("Backar vänster")
+                print("Turning left")
                 back_left()
                 time.sleep(0.5)
-                #print("Skickar bild på hindert....")
-                #os.system("/home/pi/robot/send_mail.py")
+                
+                
         
             
         
@@ -151,17 +151,17 @@ try:
 
 
             if (char == "s"):
-                print("Manuellt ändrar kurser")
+                print("Modifing route")
                 back_left()
                 time.sleep(0.2)
 
             elif (char == 'a'):
-                print("Manuellt ändrar kursen")
+                print("Modifing route")
                 back_right()
                 time.sleep(0.2)    
 
 except KeyboardInterrupt:
-    print("Robot stannar")
+    print("Stopping robot")
     stopit()
 
     GPIO.cleanup()
