@@ -73,7 +73,7 @@ try:
             GPIO.output(35, False)
             GPIO.output(37, False)
         
-        forward()
+        
         
         GPIO.setup(PIN_TRIGGER, GPIO.OUT)
         GPIO.setup(PIN_ECHO, GPIO.IN)
