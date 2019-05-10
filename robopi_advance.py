@@ -20,31 +20,17 @@ os.system("sudo service motion stop")
 kamera = PiCamera()
 namn = datetime.now().strftime('%c')
 
-def getch():
-    fd = sys.stdin.fileno()
-    old_settings = termios.tcgetattr(fd)
-    try:
-        tty.setraw(sys.stdin.fileno())
-        ch = sys.stdin.read(1)
-             
-    finally:
-        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-    return ch
-
-
-
+GPIO.setmode(GPIO.BOARD)
 GPIO.setup(31, GPIO.OUT)
 GPIO.setup(33, GPIO.OUT)
 GPIO.setup(35, GPIO.OUT)
 GPIO.setup(37, GPIO.OUT)
-GPIO.setmode(GPIO.BOARD)
+
 PIN_TRIGGER = 7
 PIN_ECHO = 11
 GPIO.setup(PIN_TRIGGER, GPIO.OUT)
 GPIO.setup(PIN_ECHO, GPIO.IN)
-
     
-
 
 
 def forward():
@@ -116,9 +102,9 @@ try:
             
         
             
-        if distance < 30:  // This part has stopped working
+        if distance < 30: 
            
-            topit()
+            stopit()
             kamera.capture('/home/pi/robot/bilder/'+namn+'.jpeg')
             os.system("/home/pi/robot/send_mail.py")
 	    #print("Distance:",distance,"cm")
@@ -146,6 +132,16 @@ try:
         else:
             forward()
 
+            def getch():
+                fd = sys.stdin.fileno()
+                old_settings = termios.tcgetattr(fd)
+                try:
+                    tty.setraw(sys.stdin.fileno())
+                    ch = sys.stdin.read(1)
+                         
+                finally:
+                    termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+                return ch
 
             
                 
@@ -168,5 +164,3 @@ except KeyboardInterrupt:
     stopit()
 
     GPIO.cleanup()
-
-
