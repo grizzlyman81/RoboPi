@@ -132,32 +132,34 @@ try:
         else:
             forward()
 
-            def getch():
-                fd = sys.stdin.fileno()
-                old_settings = termios.tcgetattr(fd)
-                try:
-                    tty.setraw(sys.stdin.fileno())
-                    ch = sys.stdin.read(1)
-                         
-                finally:
-                    termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-                return ch
 
-            
+    def getch():
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+        try:
+            tty.setraw(sys.stdin.fileno())
+            ch = sys.stdin.read(1)
+                             
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        return ch
+
                 
                     
-            char = getch() 
+                        
+    char = getch() 
 
 
-            if (char == "s"):
-                print("Turning")
-                back_left()
-                time.sleep(0.2)
+    if (char == "s"):
+        print("Turning")
+        back_left()
+        time.sleep(0.2)
 
-            elif (char == 'a'):
-                print("Turning")
-                back_right()
-                time.sleep(0.2)    
+    elif (char == 'a'):
+        print("Turning")
+        back_right()
+        time.sleep(0.2)  
+
 
 except KeyboardInterrupt:
     print("Robot stopping")
