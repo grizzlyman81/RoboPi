@@ -74,95 +74,79 @@ def stopit():
 try:
 
     while True:
-        GPIO.output(PIN_TRIGGER, GPIO.LOW)
-
-       
-
-        time.sleep(0.2)
-
         
-
-        GPIO.output(PIN_TRIGGER, GPIO.HIGH)
-
-        time.sleep(0.00001)
-
-        GPIO.output(PIN_TRIGGER, GPIO.LOW)
-
-        while GPIO.input(PIN_ECHO)==0:
-            pulse_start_time = time.time()
-            
-        while GPIO.input(PIN_ECHO)==1:
-            pulse_end_time = time.time()
-
-        pulse_duration = pulse_end_time - pulse_start_time
-        distance = round(pulse_duration * 17150, 2)
-       # print ("Distance:",distance,"cm")
-       
-      
+        def getch():
+            fd = sys.stdin.fileno()
+            old_settings = termios.tcgetattr(fd)
+            try:
+                tty.setraw(sys.stdin.fileno())
+                ch = sys.stdin.read(1)
+                         
+            finally:
+                termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+            return ch
             
         
-            
-        if distance < 30: 
+            GPIO.output(PIN_TRIGGER, GPIO.LOW)
+
            
-            stopit()
-            kamera.capture('/home/pi/robot/bilder/'+namn+'.jpeg')
-            os.system("/home/pi/robot/send_mail.py")
-	    #print("Distance:",distance,"cm")
-            #back_right()
-            r = random.randint(0,11)
-            if r > 5:
-                
-                back_right()
-                time.sleep(0.5)
+
+            time.sleep(0.2)
+
             
-                        
-            else:
+
+            GPIO.output(PIN_TRIGGER, GPIO.HIGH)
+
+            time.sleep(0.00001)
+
+            GPIO.output(PIN_TRIGGER, GPIO.LOW)
+
+            while GPIO.input(PIN_ECHO)==0:
+                pulse_start_time = time.time()
                 
-                back_left()
-                time.sleep(0.5)
+            while GPIO.input(PIN_ECHO)==1:
+                pulse_end_time = time.time()
+
+            pulse_duration = pulse_end_time - pulse_start_time
+            distance = round(pulse_duration * 17150, 2)
+           # print ("Distance:",distance,"cm")
            
-        
-
+          
                 
-        
-            
-        
             
                 
-        else:
-            forward()
-
-
-    def getch():
-        fd = sys.stdin.fileno()
-        old_settings = termios.tcgetattr(fd)
-        try:
-            tty.setraw(sys.stdin.fileno())
-            ch = sys.stdin.read(1)
-                             
-        finally:
-            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-        return ch
-
-                
+            if distance < 30: 
+               
+                stopit()
+                kamera.capture('/home/pi/robot/bilder/'+namn+'.jpeg')
+                os.system("/home/pi/robot/send_mail.py")
+                #print("Distance:",distance,"cm")
+                #back_right()
+                r = random.randint(0,11)
+                if r > 5:
                     
-                        
-    char = getch() 
+                    back_right()
+                    time.sleep(0.5)
+                
+                            
+                else:
+                    
+                    back_left()
+                    time.sleep(0.5)
+           
+        
 
+                
+        
+            
+        
+            
+                
+            else:
+                forward()
 
-    if (char == "s"):
-        print("Turning")
-        back_left()
-        time.sleep(0.2)
-
-    elif (char == 'a'):
-        print("Turning")
-        back_right()
-        time.sleep(0.2)  
-
+    
 
 except KeyboardInterrupt:
     print("Robot stopping")
     stopit()
-
-    GPIO.cleanup()
