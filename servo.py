@@ -1,70 +1,32 @@
+#!/usr/bin/python3
 
-	
 import RPi.GPIO as GPIO
 import time
-import pigpio
-pi = pigpio.pi()
-from datetime import datetime
-from picamera import PiCamera
-kamera = PiCamera()
-import os
+
+GPIO.setmode(GPIO.BOARD)
+
+GPIO.setup(3, GPIO.OUT)
+GPIO.setup(38, GPIO.OUT)
+
+p2 = GPIO.PWM(38, 50)
 
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(4, GPIO.IN)
-#GPIO.setup(10, GPIO.OUT)
-SERVO = 15
+p = GPIO.PWM(3, 50)
 
-try:
-    while True:
-        name = datetime.now().strftime('%c')
-        i=GPIO.input(4)
-        pi.set_servo_pulsewidth(SERVO, 1000) # Start position of Servo
-        print("Position: 1000")
-        time.sleep(10) # time for servo to stop and stand still
-        if i==0:
-            print("No movement")
-            
-            pi.set_servo_pulsewidth(SERVO, 1500) # New Position
-            print("Moved sensor to 1500")
-            time.sleep(10)
-            
-        elif i == 1:
-            print("Movement")
-            kamera.capture('/home/pi/bevaka/bilder/motion/'+name+'.jpeg')
-            os.system('/home/pi/backup/attach_test.py')
-            time.sleep(5)
-            i = 0
-         
-            pi.set_servo_pulsewidth(SERVO, 1500)
-            print("Moved sensor to 1500")
-            time.sleep(10)
-        if i==0:
-            print("No Movement")
-            
-            pi.set_servo_pulsewidth(SERVO, 2000)
-            print("Moved sensor to 2000")
-            time.sleep(10)
-        elif i == 1:
-            print("Movement")
-            kamera.capture('/home/pi/bevaka/bilder/motion/'+name+'.jpeg')
-            os.system('/home/pi/backup/attach_test.py')
-            time.sleep(5)
-            i = 0
-            pi.set_servo_pulsewidth(SERVO, 2000)
-            print("Moved Ssensor to 2000")
-            time.sleep(10)
-            
-       
-        if i==0:
-            print("No Movement")
-            
-        elif i == 1:
-            print("Movement")
-            kamera.capture('/home/pi/bevaka/bilder/motion/'+name+'.jpeg')
-            os.system('/home/pi/backup/attach_test.py')
-            time.sleep(10)
-            i = 0
-except KeyboardInterrupt:
-    pi.stop()
-    GPIO.cleanup()
+
+
+p.start(12.5)
+p2.start(2.5)
+
+
+p2.ChangeDutyCycle(12.5)
+time.sleep(1)
+    #p.ChangeDutyCycle(7.5)  # turn towards 90 degree
+    #time.sleep(1)  # sleep 1 second
+p.ChangeDutyCycle(0.5)  # turn towards 0 degree
+time.sleep(1)  # sleep 1 second
+p2.ChangeDutyCycle(2.5)
+time.sleep(2)
+p2.stop()
+p.stop()
+GPIO.cleanup()
