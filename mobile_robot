@@ -1,0 +1,101 @@
+#!/usr/bin/python3
+from bluedot import BlueDot
+import RPi.GPIO as gpio
+from signal import pause
+import time
+gpio.setmode(gpio.BOARD)
+
+gpio.setup(31, gpio.OUT)
+gpio.setup(33, gpio.OUT)
+gpio.setup(35, gpio.OUT)
+gpio.setup(37, gpio.OUT)
+gpio.setup(3, gpio.OUT)
+gpio.setup(38, gpio.OUT)
+
+p2 = gpio.PWM(38, 50)
+
+p = gpio.PWM(3, 50)
+
+try:
+
+
+
+
+
+
+
+
+
+    def dpad(pos):
+        if pos.top:
+            print("Forward")
+            gpio.output(31, False)
+            gpio.output(33, True)
+            gpio.output(35, False)
+            gpio.output(37, True)
+
+        elif pos.bottom:
+            print("Backing")
+            gpio.output(31, True)
+            gpio.output(33, False)
+            gpio.output(35, True)
+            gpio.output(37, False)
+            
+            
+        elif pos.left:
+            print("Turning left")
+            gpio.output(31, False)
+            gpio.output(33, True)
+            gpio.output(35, False)
+            gpio.output(37, False)
+                
+            
+            
+            
+        elif pos.right:
+            print("Turning right")
+            gpio.output(31, False)
+            gpio.output(33, False)
+            gpio.output(35, False)
+            gpio.output(37, True)
+            
+        elif pos.middle:
+
+            print("activating claw!!!")
+            gpio.output(31, False)
+            gpio.output(33, False)
+            gpio.output(35, False)
+            gpio.output(37, False)
+            p.start(2.5)
+            p2.start(2.5)
+            time.sleep(1)
+            p2.ChangeDutyCycle(12.5)
+            time.sleep(2)
+            p.ChangeDutyCycle(7.5)  # turn towards 90 degree
+            time.sleep(1)  # sleep 1 second
+            p.ChangeDutyCycle(0.5)  # turn towards 0 degree
+            time.sleep(1)  # sleep 1 second
+            p2.ChangeDutyCycle(2.5)
+            time.sleep(1)
+
+
+
+
+    def stop():
+
+        gpio.output(31, False)
+        gpio.output(33, False)
+        gpio.output(35, False)
+        gpio.output(37, False)
+
+
+
+    bd = BlueDot()
+    bd.when_pressed = dpad
+    bd.when_released = stop
+    pause()
+
+except KeyboardInterrupt:
+    p2.stop()
+    p.stop()
+    print("Terminating program")
