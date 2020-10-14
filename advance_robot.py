@@ -1,10 +1,15 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Oct 14 13:41:44 2020
+
+@author: bjopet
+"""
+
 #!/usr/bin/python
 import RPi.GPIO as GPIO
 import time
 import random
-
-
-
 
 
 class Robot:
@@ -58,13 +63,17 @@ class Robot:
         if distance < 30:
             res = random.randint(0, 11)
             if res > 5:
-
+                
+                self.stopit()
+                time.sleep(0.2)
                 self.back_right()
                 time.sleep(0.5)
 
 
             else:
-
+                
+                self.stopit()
+                time.sleep(0.2)    
                 self.back_left()
                 time.sleep(0.5)
 
@@ -111,6 +120,8 @@ class Robot:
         if distance < 30:
             print("Hinder upptäckt påbörjar åtgärd")
             
+            self.stopit()
+            time.sleep(0.2)
             self.back_left()
             time.sleep(0.5)
             
@@ -149,7 +160,8 @@ class Robot:
         print("Avstånd:", distance, "cm")
         if distance < 30:
             print("Hinder upptäckt påbörjar åtgärd")
-            
+            self.stopit()
+            time.sleep(0.2)
             self.back_right()
             time.sleep(0.5)
 
@@ -194,4 +206,3 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("Stänger ner...")
         GPIO.cleanup()
-
