@@ -34,7 +34,7 @@ class Robot:
 
        # print("Värmer upp sensorn")
 
-        time.sleep(0.5)
+        time.sleep(0.2)
 
         #print("Beräknar avstånd")
 
@@ -60,13 +60,13 @@ class Robot:
             if res > 5:
 
                 self.back_right()
-                #time.sleep(1.5)
+                time.sleep(0.5)
 
 
             else:
 
                 self.back_left()
-                #time.sleep(0.5)
+                time.sleep(0.5)
 
 
         else:
@@ -112,6 +112,7 @@ class Robot:
             print("Hinder upptäckt påbörjar åtgärd")
             
             self.back_left()
+            time.sleep(0.5)
             
     def right_sensor(self):
         
@@ -150,6 +151,7 @@ class Robot:
             print("Hinder upptäckt påbörjar åtgärd")
             
             self.back_right()
+            time.sleep(0.5)
 
     def stopit(self):
 
@@ -159,7 +161,7 @@ class Robot:
         GPIO.output(33, False)
         GPIO.output(35, False)
         GPIO.output(37, False)
-        time.sleep(0.5)
+        #time.sleep(1.0)
 
     def forward(self):
         GPIO.output(31, False)
@@ -172,14 +174,14 @@ class Robot:
         GPIO.output(33, False)
         GPIO.output(35, False)
         GPIO.output(37, False)
-        time.sleep(1.5)
+        #time.sleep(0.5)
 
     def back_left(self):
         GPIO.output(31, False)
         GPIO.output(33, False)
         GPIO.output(35, True)
         GPIO.output(37, False)
-        time.sleep(1.5)
+        #time.sleep(0.5)
 
 
 if __name__ == "__main__":
@@ -187,13 +189,7 @@ if __name__ == "__main__":
     try:
         
         r = Robot()
-        #r.center_sensor()
-        #r.left_sensor()
-        #r.right_sensor()
-        #r.stopit()
-        #r.forward()
-        #r.back_right()
-        #r.back_left()
+
         
     except KeyboardInterrupt:
         print("Stänger ner...")
